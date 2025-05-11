@@ -13,46 +13,48 @@ const char *morseCodeTable[26] = {
     "..-", "...-", ".--", "-..-", "-.--", "--.." // u-z
 };
 
-char* getLetterCode(char letter)
+static char* getLetterCode(char letter)
 {
   char key = tolower(letter);
   if (key < 'a' || key > 'z')
   {
-    return; // Invalid character
+    return NULL; // Return NULL for invalid character
   }
   int index = key - 'a';
   char* code = morseCodeTable[index];
   return code;
 }
 
-void getWordCode(char *word, int led_pin)
+static void getWordCode(char *word, int led_pin) 
 {
-  int *wordCode;
   for (int i = 0; word[i] != '\0'; i++)
   {
     char* letterCode = getLetterCode(word[i]);
+    if (letterCode == NULL) {
+        continue; 
+    }
     
     for (int j = 0; letterCode[j] != '\0'; j++) {
       if (letterCode[j] == '.')
       {
         gpio_put(led_pin, 1); // Turn LED on
-        ms_sleep(ONE_UNIT);   // Wait for 1 unit
+        sleep_ms(ONE_UNIT);   // Wait for 1 unit
       }
       else if (letterCode[j] == '-')
       {
         gpio_put(led_pin, 1); // Turn LED on
-        ms_sleep(THRE_UNIT);  // Wait for 3 units
+        sleep_ms(THRE_UNIT);  // Wait for 3 units
       }
       if(letterCode[j + 1] == '\0')
       {
         gpio_put(led_pin, 0); // Turn LED off
-        ms_sleep(ONE_UNIT); // Wait for 1 unit between letters
+        sleep_ms(ONE_UNIT); // Wait for 1 unit between letters
       }
     }
   }
 }
 
-void runMoorseCode(int led_pin)
+void runMoorseCode(int led_pin) // Ensured function name matches header
 {
   stdio_init_all();
   gpio_init(led_pin);
@@ -66,6 +68,6 @@ void runMoorseCode(int led_pin)
     char *word = "hello";
     getWordCode(word, led_pin);
     gpio_put(led_pin, 0); // Turn LED off
-    ms_sleep(SEVEN_UNIT); // wait for 7 units after word
+    sleep_ms(SEVEN_UNIT); // wait for 7 units after word
   }
 }
