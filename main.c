@@ -1,9 +1,12 @@
 #include "pico/stdlib.h"
-#include "moorseCode.h"
+#include "binaryCount.h" // Include binaryCount.h instead of moorseCode.h
 
-#define LED_PIN 15 // Define LED_PIN here
+#define LED_PIN_1 12 // Define LED_PIN_1 for GP12
+#define LED_PIN_2 13 // Define LED_PIN_2 for GP13
+#define LED_PIN_3 14 // Define LED_PIN_3 for GP14
+#define LED_PIN_4 15 // Define LED_PIN_4 for GP15
 
 int main() {
-    runMoorseCode(LED_PIN); // Pass LED_PIN to the function
+    countUpToFifteen(LED_PIN_1, LED_PIN_2, LED_PIN_3, LED_PIN_4); // Call countUpToFifteen with the defined pins
     return 0;
 }
