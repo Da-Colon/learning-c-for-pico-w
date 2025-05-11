@@ -1,24 +1,22 @@
 #include "pico/stdlib.h"
-#include "dynamicBlink.h" // Added include for the header
+#include "dynamicBlink.h"
 
-#define LED_PIN 15
-
-void run_dynamic_blink() { // Renamed from main() to run_dynamic_blink() and changed return type to void
+void run_dynamic_blink(int led_pin) {
     stdio_init_all();
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
+    gpio_init(led_pin);
+    gpio_set_dir(led_pin, GPIO_OUT);
 
-    int interval = 1000; // 1 second interval
+    int interval = 1000;
     while (true) {
-        gpio_put(LED_PIN, 1);  // Turn LED on
-        sleep_ms(interval);        // Wait
-        gpio_put(LED_PIN, 0);  // Turn LED off
-        sleep_ms(interval);        // Wait
+        gpio_put(led_pin, 1);
+        sleep_ms(interval);
+        gpio_put(led_pin, 0);
+        sleep_ms(interval);
 
         if (interval > 100) {
-            interval -= 100; // Decrease interval by 100ms
+            interval -= 100;
         } else {
-            interval = 1000; // Reset to 1 second
+            interval = 1000;
         }
     }
 }
