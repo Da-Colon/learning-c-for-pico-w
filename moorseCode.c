@@ -1,6 +1,5 @@
 #include <ctype.h>
 #include "pico/stdlib.h"
-#include "dynamicBlink.h"
 
 const int ONE_UNIT = 200;
 const int THRE_UNIT = ONE_UNIT * 3;
